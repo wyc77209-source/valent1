@@ -27,13 +27,13 @@
         .overlay-text.visible { opacity: 1; transform: translateY(-10px); }
         .script-font { font-family: 'Dancing Script', cursive; text-shadow: 0 0 20px currentColor; }
         #btn-receive {
-            pointer-events: auto; opacity: 0; transform: translateY(20px);
+            pointer-events: none; opacity: 0; transform: translateY(20px);
             position: absolute; bottom: 15%; padding: 16px 45px;
             background: linear-gradient(45deg, #ff0055, #cc0033); border: none; border-radius: 50px;
             color: white; font-weight: bold; letter-spacing: 2px;
             box-shadow: 0 0 30px #ff0055; transition: all 0.8s; cursor: pointer;
         }
-        #btn-receive.visible { opacity: 1; transform: translateY(0); }
+        #btn-receive.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
         #hud {
             position: absolute; bottom: 30px; display: flex; flex-direction: column; align-items: center; gap: 8px;
             opacity: 0; transition: opacity 1s;
@@ -210,7 +210,7 @@
                     if (res.landmarks.length === 2) {
                         d = Math.hypot(res.landmarks[0][4].x - res.landmarks[1][4].x, res.landmarks[0][4].y - res.landmarks[1][4].y);
                         const id = Math.hypot(res.landmarks[0][8].x - res.landmarks[1][8].x, res.landmarks[0][8].y - res.landmarks[1][8].y);
-                        if (d < 0.18 && id < 0.18) { heartHold++; document.getElementById('hud-text').innerText = `MAGIC... ${Math.min(100, heartHold*2)}%`; if (heartHold > 50) setPhase('TEXT'); return; }
+                        if (d < 0.18 && id < 0.18) { heartHold++; document.getElementById('hud-text').innerText = `MAGIC... ${Math.min(100, heartHold*2)}%`; if (heartHold > 50) { setPhase('TEXT'); return; } }
                         else { heartHold = 0; document.getElementById('hud-text').innerText = "DUAL THUMB ZOOM"; }
                     } else {
                         d = Math.hypot(res.landmarks[0][4].x - res.landmarks[0][8].x, res.landmarks[0][4].y - res.landmarks[0][8].y);
